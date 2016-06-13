@@ -23,13 +23,13 @@ if interactive
     saliency_types(4) = input('Detect "protrusions"? [0/1]: ');
     SE_size_factor = input('Enter the Structuring Element size factor: ');
     Area_factor = input('Enter the Connected Component size factor: ');
-    num_levels = input('Enter the number of gray-levels: ');
+    step_size = input('Enter the gray-level step size');
     thresh = input('Enter the region threshold: ');
 else
     saliency_types = [1 1 1 1];
     SE_size_factor = 0.02;
     Area_factor = 0.03;
-    num_levels = 20;
+    step_size = 10;
     thresh = 0.6;
     thresh_type = 's';
 end
@@ -135,7 +135,7 @@ for test_image = test_images
             region_params = [SE_size_factor Area_factor thresh];
             execution_params = [verbose visualize_major visualize_minor];
             [num_regions, features, saliency_masks] = mssr(image_data, ROI, ...
-                num_levels, saliency_types, thresh_type, region_params, execution_params);
+                step_size, saliency_types, thresh_type, region_params, execution_params);
             toc
             
             %% save the features

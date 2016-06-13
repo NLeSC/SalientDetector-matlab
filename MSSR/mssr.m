@@ -1,7 +1,7 @@
 % mssr- main function of the MSSR detector 
 %**************************************************************************
 % [num_regions, features, saliency_masks] = mssr(image_data,ROI_mask,...
-%                                           num_levels,saliency_type,... 
+%                                           step_size,saliency_type,... 
 %                                           thresh_type, ...
 %                                           region_thresh, 
 %                                           morphology_params, ...
@@ -9,6 +9,8 @@
 %
 % author: Elena Ranguelova, NLeSc
 % date created: 19 May 2015
+% last modification date: 13 June 2016
+% modification details: num_levels parameter is replased with step_size
 % last modification date: 30 May 2016
 % modification details: added 2 more parameters for the gray-level 
 % detector: lambda_factor and connectivity; region_parameters regrouped to
@@ -25,7 +27,8 @@
 % [ROI_mask]        the Region Of Interenst binary mask [optional]
 %                   if specified should contain the binary array ROI
 %                   if left out or empty [], the whole image is considered
-% [num_levels]      number of gray levels to consider
+% [step_size]      the size of the step between consequtive gray levels to
+%                   process, default is 1
 % [saliency_type]   array with 4 flags for the 4 saliency types 
 %                   (Holes, Islands, Indentations, Protrusions)
 %                   [optional], if left out- default is [1 1 1 1]
@@ -88,7 +91,7 @@
 % for photo-ID of humpback whales", IJGVIP, Special issue on features, 2006
 %**************************************************************************
 function [num_regions, features, saliency_masks] = mssr(image_data,ROI_mask,...
-                                           num_levels, saliency_type, ...
+                                           step_size, saliency_type, ...
                                            thresh_type, ...
                                            region_thresh,...
                                            morphology_parameters, ...
@@ -114,8 +117,8 @@ end
 if nargin < 4 || isempty(saliency_type)
     saliency_type = [1 1 1 1];
 end
-if nargin < 3 || isempty(num_levels)
-    num_levels = 25;
+if nargin < 3 || isempty(step_size)
+    step_size = 1;
 end
 if nargin < 2
     ROI_mask = [];
@@ -244,7 +247,8 @@ end
 %--------------------------------------------------------------------------
 % gray-level step
 min_level =  1; max_level = 255;
-step = (max_level - min_level)/num_levels;
+num_levels = length(min_level:max_level);
+step = step_size;
 if step == 0
     step = 1;
 end
@@ -252,12 +256,12 @@ end
 switch thresh_type
     case 's'        
         thresholds = fix(min_level:step:max_level-step);
+        num_levels = length(thresholds);
     case 'm'
         thresholds = multithresh(image_data, num_levels);
         num_levels = length(thresholds);
         thresh_type ='s';
-    case 'h'
-        step = fix(255/num_levels);
+    case 'h'        
         high_thresholds  = step:step:255;
         low_thresholds = 0:step:255-step;
         num_levels = length(high_thresholds);

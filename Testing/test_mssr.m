@@ -2,6 +2,8 @@
 %**************************************************************************
 % author: Elena Ranguelova, NLeSc
 % date created: 15-05-2015
+% last modification date: 13 June 2016
+% modification details: num_levels parameter is replased with step_size
 % last modification date: 30 May 2016
 % modification details: uses the morphology_parameters parameter group
 % last modification date: 1-06-2015
@@ -100,7 +102,8 @@ for test_image = test_images
                 Area_factor = input('Enter the Connected Component size factor: ');
                 lambda_factor = input('Enter the morphological opening size factor: ');
                 conn = input('Enter the connectivity [4|8]: ');
-                num_levels = input('Enter the number of gray-levels: ');
+                %num_levels = input('Enter the number of gray-levels: ');
+                step_size = input('Enter the gray-level step size');
                 region_thresh = input('Enter the region threshold: ');
             else
                 saliency_types = [1 1 1 1];
@@ -108,7 +111,8 @@ for test_image = test_images
                 area_factor = 0.03;
                 lamdba_factor = 5;
                 conn = 4; 
-                num_levels = 20;
+                %num_levels = 20;
+                step_size = 10;
                 region_thresh = 0.6;
                 thresh_type = 's';
             end
@@ -121,15 +125,17 @@ for test_image = test_images
             morphology_parameters = [SE_size_factor area_factor lamdba_factor conn];
             execution_params = [verbose visualize_major visualize_minor];
             [num_regions, features, saliency_masks] = mssr(image_data, ROI, ...
-                num_levels, saliency_types, thresh_type, region_thresh, ...
+                step_size, saliency_types, thresh_type, region_thresh, ...
                 morphology_parameters, execution_params);
             toc
             
             %% save the features
-            disp('Saving ...');
-            
-            save_regions(detector,char(features_filenames{i}), ...
-                char(regions_filenames{i}), num_regions, features, saliency_masks);
+            if save_flag
+                disp('Saving ...');
+                
+                save_regions(detector,char(features_filenames{i}), ...
+                    char(regions_filenames{i}), num_regions, features, saliency_masks);
+            end
         end
         %% visualize
         if vis_flag
