@@ -95,7 +95,7 @@ SE = strel('disk',SE_size);
 %SEhi = strel('disk',SEhi_size);
 
 % SE_n = getnhood(SE);
-% save('SE_neighb_all_other.mat', 'SE_n');
+% save('SE_all.mat', 'SE_n');
 % SEhi_n = getnhood(SEhi);
 % save('SEhi_neighb_all_other.mat', 'SEhi_n');
 

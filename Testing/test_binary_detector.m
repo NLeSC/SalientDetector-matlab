@@ -2,13 +2,15 @@
 %**************************************************************************
 % author: Elena Ranguelova, NLeSc
 % date created: 11-03-2016
+% last modification date: 14 June 2016
+% modification details: added test results folder (TestResults)
 % last modification date: 30 May 2016
 % modification details: uses the morphology_parameters parameter group
 % NOTE: replaces test_mssr_binary.m
 %**************************************************************************
 %% execution paramaters
 interactive = false;
-save_flag = 0;
+save_flag = 1;
 vis_flag = 1;
 vis_only = false;
 vis_steps = false;
@@ -20,7 +22,7 @@ else
 end
 project_path = fullfile(starting_path, 'eStep','LargeScaleImaging');
 data_path = fullfile(project_path, 'TestData', 'Binary');
-results_path = data_path;
+results_path = fullfile(project_path, 'TestResults', 'Binary');
 
 if interactive
     % image_base_filename = input('Enter the base image filename: ','s');
@@ -156,7 +158,7 @@ image_data = logical(imread(image_filename));
 
 
 %% run the binary detector on the test image
-disp('Binary detctor');
+disp('Binary detector');
 tic
 [saliency_masks] = binary_detector(image_data, morphological_parameters,...
     saliency_types, vis_steps);
