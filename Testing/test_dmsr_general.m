@@ -2,6 +2,8 @@
 %**************************************************************************
 % author: Elena Ranguelova, NLeSc
 % date created: 01-10-2015
+% last modification date: 14 June 2016
+% modification details: changed the data and results folders to TestData/Results
 % last modification date: 12-10-2015
 % modification details: this version tests the DMSR detector
 %**************************************************************************
@@ -16,9 +18,9 @@ lisa = false;
 batch_structural = false;
 batch_textural = false;
 
-detector = 'DMSR';
+detector = 'DMSRA';
 
-save_flag = 0;
+save_flag = 1;
 vis_flag = 1;
 vis_only = false;
 
@@ -30,24 +32,35 @@ elseif lisa
 else
     starting_path = fullfile(filesep,'home','elena');
 end
+% project_path = fullfile(starting_path, 'eStep','LargeScaleImaging');
+% data_path = fullfile(project_path, 'Data', 'AffineRegions');
+% results_path = fullfile(project_path, 'Results', 'AffineRegions');
+% 
+% if interactive
+%     test_images = input('Enter test case: [bark|bikes|boat|graffiti|leuven|trees|ubc|wall]: ','s');
+%     mask_filename = input('Enter the mask filename (.mat): ', 's');
+% else
+%     if batch_structural
+%         test_images = {'boat', 'bikes', 'graffiti', 'leuven'};
+%     else if batch_textural
+%             test_images = {'bark', 'trees', 'ubc', 'wall'};
+%         else
+%             test_images = {'boat'};
+%         end
+%     end
+%     mask_filename =[];
+%     
+% end
 project_path = fullfile(starting_path, 'eStep','LargeScaleImaging');
-data_path = fullfile(project_path, 'Data', 'AffineRegions');
-results_path = fullfile(project_path, 'Results', 'AffineRegions');
+data_path = fullfile(project_path, 'TestData');
+results_path = fullfile(project_path, 'TestResults');
 
 if interactive
-    test_images = input('Enter test case: [bark|bikes|boat|graffiti|leuven|trees|ubc|wall]: ','s');
+    test_images = input('Enter test case: [Gray|Color]: ','s');
     mask_filename = input('Enter the mask filename (.mat): ', 's');
-else
-    if batch_structural
-        test_images = {'boat', 'bikes', 'graffiti', 'leuven'};
-    else if batch_textural
-            test_images = {'bark', 'trees', 'ubc', 'wall'};
-        else
-            test_images = {'boat'};
-        end
-    end
-    mask_filename =[];
-    
+else  
+   test_images = {'color'};
+   mask_filename =[];
 end
 
 %% run for all test cases
@@ -109,7 +122,7 @@ for test_image = test_images
 %                verbose = 0;
 %                 visualize_major = 0;
 %                 visualize_minor = 0;
-                saliency_type = [1 1 0 0];
+                saliency_type = [1 1 1 1];
             end
             
             %% run
