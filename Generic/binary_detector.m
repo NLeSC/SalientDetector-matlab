@@ -90,18 +90,14 @@ connectivity = morphology_parameters(4);
 
 % SE
 SE_size = fix(SE_size_factor*sqrt(ROI_Area/pi))
-%SEhi_size = fix(SE_size/2)
 SE = strel('disk',SE_size);
-%SEhi = strel('disk',SEhi_size);
 
-% SE_n = getnhood(SE);
+%SE_n = getnhood(SE);
 % save('SE_all.mat', 'SE_n');
-% SEhi_n = getnhood(SEhi);
-% save('SEhi_neighb_all_other.mat', 'SEhi_n');
+%save('SE_nested.mat', 'SE_n');
 
 % area opening parameter
 lambda = lambda_factor*SE_size
-%lambdahi = fix(SE_size/2)
 %**************************************************************************
 % initialisations
 %--------------------------------------------------------------------------
@@ -236,8 +232,6 @@ if (indentations_flag || protrusions_flag)
         SCCH = (CCLH==j);
         if indentations_flag
             % black top hat
-           % SCCH_bth = imbothat(SCCH,SEhi);
-           % SCCH_bth = bwareaopen(SCCH_bth,lambdahi,4);
             SCCH_bth = imbothat(SCCH,SE);
             SCCH_bth = bwareaopen(SCCH_bth,lambda,connectivity);
             % the indentaitons in the largeholes are actually protrusions in respect to the whole image!
@@ -245,8 +239,6 @@ if (indentations_flag || protrusions_flag)
         end
         if protrusions_flag
             % white top hat
-%             SCCH_wth = imtophat(SCCH,SEhi);
-%             SCCH_wth = bwareaopen(SCCH_wth,lambdahi,4);
             SCCH_wth = imtophat(SCCH,SE);
             SCCH_wth = bwareaopen(SCCH_wth,lambda,connectivity);
             % the prorusions in the large holes are actually indentaitions in respect to the whole image!            
@@ -258,16 +250,12 @@ if (indentations_flag || protrusions_flag)
         SCCI = (CCLI==j);
         if indentations_flag
             % black top hat
-%             SCCI_bth = imbothat(SCCI,SEhi);
-%             SCCI_bth = bwareaopen(SCCI_bth,lambdahi,4);
              SCCI_bth = imbothat(SCCI,SE);
              SCCI_bth = bwareaopen(SCCI_bth,lambda,connectivity);
             indentations = indentations|SCCI_bth;
         end
         if protrusions_flag
             % white top hat
-%             SCCI_wth = imtophat(SCCI,SEhi);
-%             SCCI_wth = bwareaopen(SCCI_wth,lambdahi,4);
             SCCI_wth = imtophat(SCCI,SE);
             SCCI_wth = bwareaopen(SCCI_wth,lambda,connectivity);
             protrusions = protrusions|SCCI_wth;
