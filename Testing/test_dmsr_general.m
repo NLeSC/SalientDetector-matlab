@@ -9,7 +9,7 @@
 %**************************************************************************
 %% paramaters
 interactive = false;
-verbose = false;
+verbose = true;
 visualize = true;
 visualize_major = false;
 visualize_minor = false;
@@ -59,7 +59,7 @@ if interactive
     test_images = input('Enter test case: [Gray|Color]: ','s');
     mask_filename = input('Enter the mask filename (.mat): ', 's');
 else  
-   test_images = {'color'};
+   test_images = {'gray'};
    mask_filename =[];
 end
 
@@ -119,9 +119,7 @@ for test_image = test_images
                 weight_all = 0.33;
                 weight_large = 0.33;
                 weight_very_large = 0.33;
-%                verbose = 0;
-%                 visualize_major = 0;
-%                 visualize_minor = 0;
+                python_test = 1;
                 saliency_type = [1 1 1 1];
             end
             
@@ -133,7 +131,7 @@ for test_image = test_images
             morphology_parameters = [SE_size_factor Area_factor_very_large ...
                 Area_factor_large lambda_factor conn];
             weights = [weight_all weight_large weight_very_large];
-            execution_flags = [verbose visualize_major visualize_minor];
+            execution_flags = [verbose visualize_major visualize_minor python_test];
             
             [num_regions, features, saliency_masks] = dmsr(image_data,ROI,...
                 step_size, offset,...

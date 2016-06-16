@@ -7,6 +7,8 @@
 %
 % author: Elena Ranguelova, NLeSc
 % date created: 07.10.2015
+% last modification date: 16 June 2016
+% modification details: added python_test flag
 % last modification date: 31 May 2016
 % modification details: num_levels parameter is replaced with step_size
 % last modification date: 5 Jan 2016
@@ -42,7 +44,8 @@
 % [execution_flags] vector of 2 elements, controlling the execution
 %                   verbose- verbose mode
 %                   visualize- vizualize
-%                   default value- [0 0]
+%                   python_test- generating results for the python test
+%                   default value- [0 0 0]
 %**************************************************************************
 % OUTPUTS:
 % binary_image      the binarized gray level image
@@ -64,8 +67,8 @@ function [binary_image, otsu, num_combined_cc, thresh] = max_conncomp_thresholdi
 %**************************************************************************
 % input control
 %--------------------------------------------------------------------------
-if nargin < 7 || length(execution_flags) < 2
-    execution_flags = [0 0];
+if nargin < 7 || length(execution_flags) < 3
+    execution_flags = [0 0 0];
 elseif nargin < 6 || length(weights) < 3
     weights = [0.33 0.33 0.33];
 elseif nargin < 5 || length(morphology_parameters) < 5
@@ -81,11 +84,16 @@ elseif nargin < 1
 end
 
 %**************************************************************************
+% flags
+%--------------------------------------------------------------------------
+
+%**************************************************************************
 % input parameters -> variables
 %--------------------------------------------------------------------------
 % execution flags
 verbose = execution_flags(1);
 visualization = execution_flags(2);
+python_test = execution_flags(3);
 
 % weights
 weight_all = weights(1);
@@ -151,10 +159,14 @@ if not (otsu_only)
         binary = gray_image > level;
         binary_filt = bwareaopen(binary, lambda, connectivity);
         clear binary
-        binary_filt2 = 1- bwareaopen(1- binary_filt, lambda, connectivity);
-        binary_masks(:,:,fix(level)) = binary_filt2;
-         
-        clear binary_filt binary_filt2
+        if python_test
+            binary_masks(:,:,fix(level)) = binary_filt;
+            clear binary_filt 
+        else            
+            binary_filt2 = 1- bwareaopen(1- binary_filt, lambda, connectivity);
+            binary_masks(:,:,fix(level)) = binary_filt2;
+            clear binary_filt binary_filt2
+        end        
     end
     
     % count number of all and large and very large connected components
@@ -199,6 +211,10 @@ if not (otsu_only)
     [max_large_num, thresh_large] = max(num_large_cc(:)); %#ok<ASGLU>
     [max_very_large_num, thresh_very_large] = max(num_very_large_cc(:)); %#ok<ASGLU>
     
+%     save('Num_cc_and_max.mat', 'num_cc','max_num', ...
+%                        'num_large_cc','max_large_num',...
+%                        'num_very_large_cc', 'max_very_large_num') ;
+                   
     norm_num_cc = num_cc/max_num;
     norm_large_num_cc = num_large_cc/max_large_num;
     norm_very_large_num_cc = num_very_large_cc/max_very_large_num;
@@ -208,10 +224,20 @@ if not (otsu_only)
         disp('Combining the counts and finding the maximum...');
     end
     
+    
     num_combined_cc = (weight_all*norm_num_cc + ...
         weight_large* norm_large_num_cc+ ...
         weight_very_large*norm_very_large_num_cc);
     
+    % saving for debugging purposes
+   % field1 = 'norm_num_cc'; field2 = 'norm_large_num_cc'; 
+   % field3 = 'norm_very_large_num_cc'; field4 = 'num_combined_cc';
+   % scores = struct(field1, norm_num_cc, field2, norm_large_num_cc, ...
+   %     field3, norm_very_large_num_cc, field4, num_combined_cc);
+    
+%     save('Norm_num_cc.mat', 'norm_num_cc','norm_large_num_cc', ...
+%                        'norm_very_large_num_cc', 'num_combined_cc') ;
+%     
     %**************************************************************************
     % variables -> output parameters
     %--------------------------------------------------------------------------
@@ -274,3 +300,4 @@ else
     thresh = otsu;
     num_combined_cc = 0;
 end
+

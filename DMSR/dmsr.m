@@ -8,6 +8,8 @@
 %
 % author: Elena Ranguelova, NLeSc
 % date created: 12 Oct 2015
+% last modification date: 16 June 2016
+% modification details: added python_test flag
 % last modification date: 31 May 2016
 % modification details: num_levels parameter is replased with step_size
 % last modification date: 30 May 2016
@@ -44,9 +46,9 @@
 %                   weight_large- the weight for the number large CC
 %                   weight_very_large- for the number of very large CC
 %                   default value - [0.33 0.33 0.33], i.e equal
-% [execution_flags] vector with 3 flags [verbose, visualise_major, ...
-%                                                       visualise_minor]
-%                   [optional], if left out- default is [0 0 0]
+% [execution_flags] vector with 4 flags [verbose, visualise_major, ...
+%                                        visualise_minor, python_test]
+%                   [optional], if left out- default is [0 0 0 0]
 %                   visualise_major "overrides" visualise_minor
 %**************************************************************************
 % OUTPUTS:
@@ -79,8 +81,8 @@ function [num_regions, features, saliency_masks] = dmsr(image_data,ROI_mask,...
 %**************************************************************************
 % input control                                         
 %--------------------------------------------------------------------------
-if nargin < 9 || length(execution_flags) <3
-    execution_flags = [0 0 0];
+if nargin < 9 || length(execution_flags) <4
+    execution_flags = [0 0 0 0];
 end
 if nargin < 8 || isempty(weights) || length(weights) < 3
     weights = [0.33 0.33 0.33];
@@ -118,6 +120,7 @@ end
 verbose = execution_flags(1);
 visualise_major = execution_flags(2);
 visualise_minor = execution_flags(3);    
+python_test = execution_flags(4);
 
 if visualise_minor
     visualise_major = 1;  
@@ -212,7 +215,7 @@ end
 
 [binary_image, otsu, num_cc, thresh] = max_conncomp_thresholding(ROI_only, ...
     step_size, offset, otsu_only, ...
-    morphology_parameters, weights, [verbose visualise_minor]);
+    morphology_parameters, weights, [verbose visualise_minor python_test]);
 
 if visualise_major
     figure('Position',scnsize);

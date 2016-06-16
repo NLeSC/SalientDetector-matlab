@@ -32,6 +32,7 @@ weight_very_large = 0.33;
 detector = 'DMSR';
 save_flag = 0;
 vis_flag = 1;
+python_test = 1;
 
 %% image filename
 if ispc
@@ -113,7 +114,7 @@ for test_image = test_images
                         morphology_parameters = [SE_size_factor Area_factor_very_large ...
                             Area_factor_large lambda_factor conn];
                         weights = [weight_all weight_large weight_very_large];
-                        execution_flags = [verbose visualize];
+                        execution_flags = [verbose visualize python_test];
                         
                         [binary_image, otsu, num_combined_cc, thresh] = max_conncomp_thresholding(image_data, ...
                             step_size, offset, otsu_only, ...
