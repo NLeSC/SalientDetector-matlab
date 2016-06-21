@@ -158,13 +158,15 @@ end
 if islands_flag || indentations_flag || protrusions_flag
     islands = (filled_ROI_inv.*ROI);
     % remove small isolated bits
-    islands = bwareaopen(islands,lambda,4);
+    %islands = bwareaopen(islands,lambda,4);
+    islands = bwareaopen(islands,lambda,8);
 end
 
 if holes_flag || indentations_flag || protrusions_flag
     holes = (filled_ROI.*imcomplement(ROI));
     % remove small isolated bits
-    holes = bwareaopen(holes,lambda,4);
+    %holes = bwareaopen(holes,lambda,4);
+    holes = bwareaopen(holes,lambda,8);
 end
 
 % visualisation
