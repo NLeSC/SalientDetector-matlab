@@ -81,7 +81,7 @@ data_nz=data(non_zero);
 % data span
 mmax = max(data_nz);
 mmin = min(data_nz);
-span = mmax-mmin;
+span = mmax-mmin+1;
 
 if verbose 
     disp(['Data span: ' num2str(span)]);
@@ -115,7 +115,8 @@ if isempty(cs)
     tr = 0;
 else
     t = fix(cs(length(cs))*factor);
-    tr = min(find(cs>=t)); %#ok<MXFND>
+   %t = floor(cs(length(cs))*factor);
+    tr = mmin + min(find(cs>=t)) -1; %#ok<MXFND>
 end
 if verbose 
     disp(['Location to cut the sum: ' num2str(t)]);
@@ -125,7 +126,8 @@ if verbose
     disp(['Threshold: ' num2str(tr)]);
 end
 
-thresh_data = data>=tr;
+%thresh_data = data>=tr;
+thresh_data = data>tr;
 
 %**************************************************************************
 % variables -> output parameters
