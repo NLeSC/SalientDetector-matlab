@@ -247,6 +247,7 @@ end
 %--------------------------------------------------------------------------
 % gray-level step
 min_level =  1; max_level = 255;
+%min_level =  140; max_level = 140;
 num_levels = length(min_level:max_level);
 step = step_size;
 if step == 0
@@ -255,7 +256,7 @@ end
 
 switch thresh_type
     case 's'        
-        thresholds = fix(min_level:step:max_level-step);
+        thresholds = fix(min_level:step:max_level-step)
         num_levels = length(thresholds);
     case 'm'
         thresholds = multithresh(image_data, num_levels);
@@ -291,20 +292,25 @@ tic;
 %..........................................................................
 % compute binary saliency for every sampled gray-level
 %..........................................................................
-for it = 1:num_levels
-         wb_counter = wb_counter + 1;
-         waitbar(wb_counter/length(1:num_levels));
-         drawnow
+% for it = 1:num_levels
+%          wb_counter = wb_counter + 1;
+%          waitbar(wb_counter/length(1:num_levels));
+%          drawnow
+% 
+%         switch thresh_type
+%             case 'm'
+%             case 's'
+%                 level = thresholds(it)
+%             case 'h'
+%                 level(1) = high_thresholds(it);
+%                 level(2) = low_thresholds(it);                
+%         end
 
-        switch thresh_type
-            case 'm'
-            case 's'
-                level = thresholds(it);
-            case 'h'
-                level(1) = high_thresholds(it);
-                level(2) = low_thresholds(it);                
-        end
+for level = min_level:step:max_level
     %pause
+    if verbose
+        disp(level);
+    end
     [saliency_masks_level, binary_image] = gray_level_detector(ROI_only, ...
                                             thresh_type, level, ...
                                             morphology_parameters,...
@@ -333,30 +339,35 @@ for it = 1:num_levels
     if visualise_major
         if holes_flag
          figure(f1);subplot(221);imagesc(holes_acc); axis image; axis on;grid on;
-         set(gcf, 'Colormap',mycmap);title('holes');colorbar('South');         
+         set(gcf, 'Colormap',mycmap);
+         title('holes');colorbar('South');         
         end
         if islands_flag
          subplot(222);imagesc(islands_acc);axis image;axis on;grid on;
-         set(gcf, 'Colormap',mycmap);title('islands');colorbar('South');
+         set(gcf, 'Colormap',mycmap);
+         title('islands');colorbar('South');
         end
         if indentations_flag
          subplot(223);imagesc(indentations_acc);axis image;axis on;grid on;
-         set(gcf, 'Colormap',mycmap);title('indentations');colorbar('South');
+         set(gcf, 'Colormap',mycmap);
+         title('indentations');colorbar('South');
         end
         if protrusions_flag
          subplot(224);imagesc(protrusions_acc);axis image;axis on;grid on;
-         set(gcf, 'Colormap',mycmap);title('protrusions');colorbar('South');                   
+         set(gcf, 'Colormap',mycmap);
+         title('protrusions');colorbar('South');                   
         end
         figure(f);imshow(ROI_only > level); 
         title(['Segmented image at gray level: ' num2str(fix(level))]);
         axis image; axis on;
     end
 end
+
+    %% visualization
     if verbose
         disp('Elapsed time for the core processing: ');toc
     end
 
-    %visualisation
     if visualise_major
         if holes_flag
          figure(f3);
