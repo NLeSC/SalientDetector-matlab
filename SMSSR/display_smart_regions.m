@@ -205,7 +205,7 @@ end
 % display the (relevant part of the) image
 I = uint8(I);
 figure(fig);
-%I = logical(I);
+I = logical(I);
 if ~isempty(sbplt)
     subplot(sbplt);
 end
