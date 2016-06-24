@@ -95,8 +95,8 @@ connectivity = morphology_parameters(4);
 SE_size = fix(SE_size_factor*sqrt(ROI_Area/pi))
 SE = strel('disk',SE_size);
 
-%SE_n = getnhood(SE);
-% save('SE_all.mat', 'SE_n');
+SE_n = getnhood(SE);
+save('SE_all.mat', 'SE_n');
 %save('SE_nested.mat', 'SE_n');
 %save('SE_125.mat', 'SE_n');
 
@@ -141,8 +141,8 @@ num_CCL = 0;
 num_CCLH = 0;
 num_CCLI = 0;
 
-filled_ROI = imfill(ROI,'holes',8);
-filled_ROI_inv = imfill(imcomplement(ROI),'holes',8);
+filled_ROI = imfill(ROI,8,'holes');
+filled_ROI_inv = imfill(imcomplement(ROI),8,'holes');
 
 % visualisation
 if visualise
