@@ -96,8 +96,8 @@ SE_size = fix(SE_size_factor*sqrt(ROI_Area/pi))
 SE = strel('disk',SE_size);
 
 SE_n = getnhood(SE);
-save('SE_all.mat', 'SE_n');
-%save('SE_nested.mat', 'SE_n');
+%save('SE_all.mat', 'SE_n');
+save('SE_nested.mat', 'SE_n');
 %save('SE_125.mat', 'SE_n');
 
 % area opening parameter
@@ -199,7 +199,7 @@ if (indentations_flag || protrusions_flag)
         if statsh(i).Area/ROI_Area >= area_factor;
             num_CCLH = num_CCLH + 1;
             region = (bwh==i);
-            filled_region = imfill(region,'holes',8);
+            filled_region = imfill(region,8,'holes');
             CCLH(filled_region)= num_CCLH;
         end
     end
@@ -208,7 +208,7 @@ if (indentations_flag || protrusions_flag)
         if statsi(i).Area/ROI_Area >= area_factor;
             num_CCLI = num_CCLI + 1;
             region = (bwi==i);
-            filled_region = imfill(region,'holes',8);
+            filled_region = imfill(region,8,'holes');
 %             if filled_region == filled_ROI
 %                 already_detected = true;
 %             end
