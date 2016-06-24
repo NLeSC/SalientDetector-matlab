@@ -5,6 +5,9 @@
 %
 % author: Elena Ranguelova, NLeSc
 % date created: 28 Sept 2015
+% last modification date: 24 June 2016
+% modification details: bwareaopen uses now parameterised connectivity; hard
+% coded connectinvity 8 to match openCV
 % last modification date: 30 May 2016
 % modification details: added 2 more parameters- lambda_factor and
 % connectivity; most parameters are grouped as morphology_parameters like
@@ -95,6 +98,7 @@ SE = strel('disk',SE_size);
 %SE_n = getnhood(SE);
 % save('SE_all.mat', 'SE_n');
 %save('SE_nested.mat', 'SE_n');
+%save('SE_125.mat', 'SE_n');
 
 % area opening parameter
 lambda = lambda_factor*SE_size
@@ -137,8 +141,8 @@ num_CCL = 0;
 num_CCLH = 0;
 num_CCLI = 0;
 
-filled_ROI = imfill(ROI,'holes');
-filled_ROI_inv = imfill(imcomplement(ROI),'holes');
+filled_ROI = imfill(ROI,'holes',8);
+filled_ROI_inv = imfill(imcomplement(ROI),'holes',8);
 
 % visualisation
 if visualise
@@ -158,15 +162,13 @@ end
 if islands_flag || indentations_flag || protrusions_flag
     islands = (filled_ROI_inv.*ROI);
     % remove small isolated bits
-    %islands = bwareaopen(islands,lambda,4);
-    islands = bwareaopen(islands,lambda,8);
+    islands = bwareaopen(islands,lambda,connectivity);
 end
 
 if holes_flag || indentations_flag || protrusions_flag
     holes = (filled_ROI.*imcomplement(ROI));
     % remove small isolated bits
-    %holes = bwareaopen(holes,lambda,4);
-    holes = bwareaopen(holes,lambda,8);
+    holes = bwareaopen(holes,lambda,connectivity);
 end
 
 % visualisation
@@ -197,7 +199,7 @@ if (indentations_flag || protrusions_flag)
         if statsh(i).Area/ROI_Area >= area_factor;
             num_CCLH = num_CCLH + 1;
             region = (bwh==i);
-            filled_region = imfill(region,'holes');
+            filled_region = imfill(region,'holes',8);
             CCLH(filled_region)= num_CCLH;
         end
     end
@@ -206,7 +208,7 @@ if (indentations_flag || protrusions_flag)
         if statsi(i).Area/ROI_Area >= area_factor;
             num_CCLI = num_CCLI + 1;
             region = (bwi==i);
-            filled_region = imfill(region,'holes');
+            filled_region = imfill(region,'holes',8);
 %             if filled_region == filled_ROI
 %                 already_detected = true;
 %             end
