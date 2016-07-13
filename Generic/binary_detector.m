@@ -5,6 +5,10 @@
 %
 % author: Elena Ranguelova, NLeSc
 % date created: 28 Sept 2015
+% last modification date: 13 July 2016
+% modification details: imfill uses now parameterised connectivity to match
+% the Python version of the code (openCV also uses flag parameter for 
+% floodFill for connectivuty)
 % last modification date: 24 June 2016
 % modification details: bwareaopen uses now parameterised connectivity; hard
 % coded connectinvity 8 to match openCV
@@ -141,8 +145,8 @@ num_CCL = 0;
 num_CCLH = 0;
 num_CCLI = 0;
 
-filled_ROI = imfill(ROI,8,'holes');
-filled_ROI_inv = imfill(imcomplement(ROI),8,'holes');
+filled_ROI = imfill(ROI,connectivity,'holes');
+filled_ROI_inv = imfill(imcomplement(ROI),connectivity,'holes');
 
 % visualisation
 if visualise
@@ -199,7 +203,7 @@ if (indentations_flag || protrusions_flag)
         if statsh(i).Area/ROI_Area >= area_factor;
             num_CCLH = num_CCLH + 1;
             region = (bwh==i);
-            filled_region = imfill(region,8,'holes');
+            filled_region = imfill(region,connectivity,'holes');
             CCLH(filled_region)= num_CCLH;
         end
     end
@@ -208,7 +212,7 @@ if (indentations_flag || protrusions_flag)
         if statsi(i).Area/ROI_Area >= area_factor;
             num_CCLI = num_CCLI + 1;
             region = (bwi==i);
-            filled_region = imfill(region,8,'holes');
+            filled_region = imfill(region,connectivity,'holes');
 %             if filled_region == filled_ROI
 %                 already_detected = true;
 %             end
