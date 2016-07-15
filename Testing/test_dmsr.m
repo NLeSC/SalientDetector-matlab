@@ -2,6 +2,12 @@
 %**************************************************************************
 % author: Elena Ranguelova, NLeSc
 % date created: 01-10-2015
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% IMPORTANT NOTE
+% Please, change the starting and project paths to point at your repo directory!
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% last modification date: 15 July 2016
+% modification details: Fixed paths and filenames
 % last modification date: 14 June 2016
 % modification details: changed the data and results folders to TestData/Results
 % last modification date: 12-10-2015
@@ -23,40 +29,20 @@ vis_only = false;
 %% image filename
 if ispc
     starting_path = fullfile('C:','Projects');
-elseif lisa
-    starting_path = fullfile(filesep, 'home','elenar');
 else
     starting_path = fullfile(filesep,'home','elena');
 end
-% project_path = fullfile(starting_path, 'eStep','LargeScaleImaging');
-% data_path = fullfile(project_path, 'Data', 'AffineRegions');
-% results_path = fullfile(project_path, 'Results', 'AffineRegions');
-% 
-% if interactive
-%     test_images = input('Enter test case: [bark|bikes|boat|graffiti|leuven|trees|ubc|wall]: ','s');
-%     mask_filename = input('Enter the mask filename (.mat): ', 's');
-% else
-%     if batch_structural
-%         test_images = {'boat', 'bikes', 'graffiti', 'leuven'};
-%     else if batch_textural
-%             test_images = {'bark', 'trees', 'ubc', 'wall'};
-%         else
-%             test_images = {'boat'};
-%         end
-%     end
-%     mask_filename =[];
-%     
-% end
-project_path = fullfile(starting_path, 'eStep','LargeScaleImaging');
+
+project_path = fullfile(starting_path, 'eStep','SalientDetector-matlab');
 data_path = fullfile(project_path, 'TestData');
 results_path = fullfile(project_path, 'TestResults');
 
 if interactive
     test_images = input('Enter test case: [Gray|Color]: ','s');
     mask_filename = input('Enter the mask filename (.mat): ', 's');
-else  
-   test_images = {'gray'};
-   mask_filename =[];
+else
+    test_images = {'gray','color'};
+    mask_filename =[];
 end
 
 %% run for all test cases
@@ -70,7 +56,7 @@ for test_image = test_images
     
     %% loop over all test images
     %for i = 1:len
-        for i = 1
+    for i = 1
         %% load the image & convert to gray-scale if  color
         image_data_or = imread(char(image_filenames{i}));
         if ndims(image_data_or) > 2
@@ -98,16 +84,27 @@ for test_image = test_images
         %% run the DMSR detector
         if not(vis_only)
             if interactive
-                %             SE_size_factor = input('Enter the Structuring Element size factor: ');
-                %             Area_factor = input('Enter the Connected Component size factor (processing): ');
-                %             num_levels = input('Enter the number of gray-levels: ');
+                saliency_types(1) = input('Detect "holes"? [0/1]: ');
+                saliency_types(2) = input('Detect "islands"? [0/1]: ');
+                saliency_types(3) = input('Detect "indentations"? [0/1]: ');
+                saliency_types(4) = input('Detect "protrusions"? [0/1]: ');
+                SE_size_factor = input('Enter the Structuring Element size factor: ');
+                Area_factor_large = input('Enter the Large Connected Component size factor: ');
+                Area_factor_very_large = input('Enter the Very Large Connected Component size factor: ');
+                lambda_factor = input('Enter the morphological opening size factor: ');
+                conn = input('Enter the connectivity [4|8]: ');
+                step_size = input('Enter the gray-level step size');
+                offset = input('Enter the offset from Otsu of levels to consider for thresholding: ');
+                otsu_only = input('Use Otsu only thresholding (no data-driven binarization?) [true|false]: ');
+                weight_all = input('Enter the weight of all CC nubmer (weight_all + weight_large + weight_very_large = 1): ');
+                weight_large = input('Enter the weight of large CC number (weight_all + weight_large + weight_very_large = 1): ');
+                weight_very_large = input('Enter the weight of very large CC number (weight_all + weight_large + weight_very_large = 1): ');
             else
-            %% parameters    
+                %% parameters
                 SE_size_factor = 0.02;
                 Area_factor_very_large = 0.01;
                 Area_factor_large = 0.001;
                 lambda_factor = 3;
-                %num_levels = 255;
                 step_size = 1;
                 offset = 80;
                 otsu_only = false;
@@ -115,7 +112,7 @@ for test_image = test_images
                 weight_all = 0.33;
                 weight_large = 0.33;
                 weight_very_large = 0.33;
-                python_test = 1;
+                python_test = 0;
                 saliency_type = [1 1 1 1];
             end
             
@@ -165,9 +162,6 @@ for test_image = test_images
                 list_smartregions, step_list_regions, scaling, labels, col_ellipse, ...
                 line_width, col_label, original);
         end
-        end
-        if batch_structural
-            close all
-        end
+    end
 end
 disp('--------------- The End ---------------------------------');
