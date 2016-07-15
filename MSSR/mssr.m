@@ -256,7 +256,7 @@ end
 
 switch thresh_type
     case 's'        
-        thresholds = fix(min_level:step:max_level-step)
+        thresholds = fix(min_level:step:max_level-step);
         num_levels = length(thresholds);
     case 'm'
         thresholds = multithresh(image_data, num_levels);

@@ -96,16 +96,11 @@ lambda_factor = morphology_parameters(3);
 connectivity = morphology_parameters(4);
 
 % SE
-SE_size = fix(SE_size_factor*sqrt(ROI_Area/pi))
+SE_size = fix(SE_size_factor*sqrt(ROI_Area/pi));
 SE = strel('disk',SE_size);
 
-SE_n = getnhood(SE);
-%save('SE_all.mat', 'SE_n');
-save('SE_nested.mat', 'SE_n');
-%save('SE_125.mat', 'SE_n');
-
 % area opening parameter
-lambda = lambda_factor*SE_size
+lambda = lambda_factor*SE_size;
 %**************************************************************************
 % initialisations
 %--------------------------------------------------------------------------
