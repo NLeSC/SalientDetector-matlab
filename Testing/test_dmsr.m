@@ -13,10 +13,6 @@ verbose = true;
 visualize = true;
 visualize_major = false;
 visualize_minor = false;
-lisa = false;
-
-batch_structural = false;
-batch_textural = false;
 
 detector = 'DMSRA';
 

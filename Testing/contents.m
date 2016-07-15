@@ -15,7 +15,7 @@
 % test_binary_detector.m- script to test the binary detector
 % test_mssr.m- script to test the MSSR detector
 
-% test_dmsr_general.m- script to test the DMSR detector on general images
+% test_dmsr.m- script to test the DMSR detector 
 % test_max_conncomp_thresholding.m- testing the data-driven binarization 
                                            
 
