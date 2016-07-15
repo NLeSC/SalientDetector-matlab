@@ -6,7 +6,7 @@
 % IMPORTANT NOTE
 % Please, change the starting and project paths to point at your repo directory!
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% last modification date: 15 June 2016
+% last modification date: 15 July 2016
 % modification details: Fixed paths and filenames
 % last modification date: 14 June 2016
 % modification details: changed the data and results folders to TestData/Results
