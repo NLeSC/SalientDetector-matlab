@@ -203,9 +203,12 @@ if original
 end
 
 % display the (relevant part of the) image
+num_unique_levels = length(unique(I));
 I = uint8(I);
 figure(fig);
-I = logical(I);
+if num_unique_levels == 2
+    I = logical(I);
+end
 if ~isempty(sbplt)
     subplot(sbplt);
 end
