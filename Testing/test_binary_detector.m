@@ -2,6 +2,12 @@
 %**************************************************************************
 % author: Elena Ranguelova, NLeSc
 % date created: 11-03-2016
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% IMPORTANT NOTE
+% Please, change the starting and project paths to point at your repo directory!
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% last modification date: 15 June 2016
+% modification details: Fixed paths and filenames
 % last modification date: 14 June 2016
 % modification details: added test results folder (TestResults)
 % last modification date: 30 May 2016
@@ -20,7 +26,7 @@ if ispc
 else
     starting_path = fullfile(filesep,'home','elena');
 end
-project_path = fullfile(starting_path, 'eStep','LargeScaleImaging');
+project_path = fullfile(starting_path, 'eStep','SalientDetector-matlab');
 data_path = fullfile(project_path, 'TestData', 'Binary');
 results_path = fullfile(project_path, 'TestResults', 'Binary');
 
@@ -39,7 +45,6 @@ switch lower(test_image)
         image_base_filename = 'Binary_holes.png';
     case 'islands'
        image_base_filename = 'Binary_islands.png';
-       % image_base_filename = 'Binary_ellipse4.png';
     case 'indent_protr'
         image_base_filename = 'Binary_indentations_protrusions.png';
     case 'nested'
