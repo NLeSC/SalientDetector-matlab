@@ -2,6 +2,12 @@
 %**************************************************************************
 % author: Elena Ranguelova, NLeSc
 % date created: 15-05-2015
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% IMPORTANT NOTE
+% Please, change the starting and project paths to point at your repo directory!
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% last modification date: 15 June 2016
+% modification details: Fixed paths and filenames
 % last modification date: 14 June 2016
 % modification details: changed the data and results folders to TestData/Results
 % last modification date: 13 June 2016
@@ -19,12 +25,8 @@ verbose = false;
 visualize = true;
 visualize_major = false;
 visualize_minor = false;
-lisa = false;
-
-% batch_structural = false;
-% batch_textural = false;
  
-detector = 'MSSRA';
+detector = 'MSSRA'; %MSSR
 save_flag = 1;
 vis_flag = 1;
 vis_only = false;
@@ -33,32 +35,11 @@ vis_only = false;
 
 if ispc 
     starting_path = fullfile('C:','Projects');
-elseif lisa
-     starting_path = fullfile(filesep, 'home','elenar');
 else
     starting_path = fullfile(filesep,'home','elena');
 end
-% project_path = fullfile(starting_path, 'eStep','LargeScaleImaging');
-% data_path = fullfile(project_path, 'Data', 'AffineRegions');
-% results_path = fullfile(project_path, 'Results', 'AffineRegions');
-% 
-% if interactive
-%     test_images = input('Enter test case: [bark|bikes|boat|graffiti|leuven|trees|ubc|wall]: ','s');
-%     mask_filename = input('Enter the mask filename (.mat): ', 's');
-% else
-%     
-%     if batch_structural
-%         test_images = {'boat', 'bikes', 'graffiti', 'leuven'};
-%     else if batch_textural
-%             test_images = {'bark', 'trees', 'ubc', 'wall'};
-%         else
-%             test_images = {'boat'};
-%         end
-%     end
-%     mask_filename =[];
-% end
 
-project_path = fullfile(starting_path, 'eStep','LargeScaleImaging');
+project_path = fullfile(starting_path, 'eStep','SalientDetector-matlab');
 data_path = fullfile(project_path, 'TestData');
 results_path = fullfile(project_path, 'TestResults');
 
@@ -66,7 +47,7 @@ if interactive
     test_images = input('Enter test case: [Gray|Color]: ','s');
     mask_filename = input('Enter the mask filename (.mat): ', 's');
 else  
-   test_images = {'color'};
+   test_images = {'gray','color'};
    mask_filename =[];
 end
 %% run for all test cases
@@ -115,7 +96,6 @@ for test_image = test_images
                 Area_factor = input('Enter the Connected Component size factor: ');
                 lambda_factor = input('Enter the morphological opening size factor: ');
                 conn = input('Enter the connectivity [4|8]: ');
-                %num_levels = input('Enter the number of gray-levels: ');
                 step_size = input('Enter the gray-level step size');
                 region_thresh = input('Enter the region threshold: ');
             else
@@ -124,7 +104,6 @@ for test_image = test_images
                 area_factor = 0.03;
                 lamdba_factor = 5;
                 conn = 4; 
-                %num_levels = 20;
                 step_size = 10;
                 region_thresh = 0.6;
                 thresh_type = 's';
