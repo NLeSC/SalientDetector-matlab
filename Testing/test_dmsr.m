@@ -1,4 +1,4 @@
-% test_dmsr_general.m- script to test the DMSR detector on general images
+% test_dmsr.m- script to test the DMSR detector on general images
 %**************************************************************************
 % author: Elena Ranguelova, NLeSc
 % date created: 01-10-2015
@@ -6,6 +6,8 @@
 % IMPORTANT NOTE
 % Please, change the starting and project paths to point at your repo directory!
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% last modification date: 21 July 2016
+% modification details: save_flag is actually used now
 % last modification date: 15 July 2016
 % modification details: Fixed paths and filenames
 % last modification date: 14 June 2016
@@ -133,8 +135,10 @@ for test_image = test_images
                 execution_flags);
             toc
             % save the features
-            disp('Saving ...');
-            save_regions(detector, char(features_filenames{i}), char(regions_filenames{i}), num_regions, features, saliency_masks);
+            if save_flag
+                disp('Saving ...');
+                save_regions(detector, char(features_filenames{i}), char(regions_filenames{i}), num_regions, features, saliency_masks);
+            end
         end
         
         %% visualize
