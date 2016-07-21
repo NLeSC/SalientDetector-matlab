@@ -199,7 +199,7 @@ if original
         I_reg = uint8(I_reg);
     end
     
-    f0=figure; imshow(I_reg); axis on; title(['SMSSR for %s' image_fname]);
+    f0=figure; imshow(I_reg); axis on; title([image_fname]);
 end
 
 % display the (relevant part of the) image
