@@ -41,6 +41,7 @@ switch lower(test_image)
         image_base_filename = 'Binary_all_types.png';
     case 'noise'
         image_base_filename = 'Binary_all_types_noise.png';
+        %image_base_filename = 'Binary_all_types_noise_oxfrei_viewpoint3.png';
     case 'holes'
         image_base_filename = 'Binary_holes.png';
     case 'islands'
@@ -49,6 +50,7 @@ switch lower(test_image)
         image_base_filename = 'Binary_indentations_protrusions.png';
     case 'nested'
         image_base_filename = 'Binary_nested.png';
+        %image_base_filename = 'Binary_nested_oxfrei_viewpoint3.png';
     otherwise
         error('test_binary_detector: unknown test_image!');
 end
