@@ -1,6 +1,7 @@
 % compute_region_props.m- computing region properties from salient binary masks
 %**************************************************************************
-% [regions_properties] = compute_region_props(saliency_masks, list_properties)
+% [regions_properties , conn_comp] = compute_region_props(saliency_masks, ...
+%                                                    conn, list_properties)
 %
 % author: Elena Ranguelova, NLeSc
 % date created: 27 Oct 2015
@@ -11,22 +12,23 @@
 %**************************************************************************
 % INPUTS:
 % saliency_masks-  the binary masks of the extracted salient regions
+% conn- neighbourhood connectivity to compute to obtain the regions from
+%       the binary masks
 % list_properties- the list of desired region properties (see help
 %                  regionprops for all values)
 %**************************************************************************
 % OUTPUTS:
 % region_properties- structure with all region properties. The fileds of 
 %                   the structure are as required in list_properties
-% conn- neighbourhood connectivity to compute toobtainthe regions from
-%       the binary masks
 % conn_comp - the connected components derived from the saliency_masks
 %**************************************************************************
 % EXAMPLES USAGE:
 % a = imread('circlesBrightDark.png');
 % bw = a < 100;
-% imshow(bw); title('Image with Circles')
-% list = {'Centroid', 'MajorAxisLength','MinorAxisLength'};
-% [regions_properties, conn_comp] = compute_region_props(bw, list)
+% conn = 4;
+% imshow(bw); title('Image with Circles'); axis on, grid on;
+% list = {'Centroid', 'Area', 'PixelList'};
+% [regions_properties, conn_comp] = compute_region_props(bw, conn, list)
 %**************************************************************************
 % REFERENCES: 
 %**************************************************************************
