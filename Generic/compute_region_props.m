@@ -78,7 +78,7 @@ if sal_types > 1
     CC = bwconncomp(saliency_masks(:,:,j), conn);
     new_properties = regionprops(CC, list_properties);
     regions_properties = append_props(regions_properties, new_properties,...
-        list_propertiess);
+        list_properties);
     conn_comp{j} = CC;
 end
 if sal_types > 2
@@ -86,7 +86,7 @@ if sal_types > 2
     CC = bwconncomp(saliency_masks(:,:,j), conn);
     new_properties = regionprops(CC, list_properties);
     regions_properties = append_props(regions_properties, new_properties,...
-        list_propertiess);
+        list_properties);
     conn_comp{j} = CC;
 end
 if sal_types > 3
@@ -94,7 +94,7 @@ if sal_types > 3
     CC = bwconncomp(saliency_masks(:,:,j), conn);
     new_properties = regionprops(CC, list_properties);
     regions_properties = append_props(regions_properties, new_properties,...
-        list_propertiess);
+        list_properties);
     conn_comp(j) = CC;
 end
 %**************************************************************************
