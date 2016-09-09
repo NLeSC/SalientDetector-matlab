@@ -23,7 +23,7 @@
 % conn_comp - the connected components derived from the saliency_masks
 %**************************************************************************
 % EXAMPLES USAGE:
-% a = imread('circlesBrightDark.png');
+% a = rgb2gray(imread('circlesBrightDark.png'));
 % bw = a < 100;
 % conn = 4;
 % imshow(bw); title('Image with Circles'); axis on, grid on;
