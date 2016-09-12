@@ -14,6 +14,7 @@
 % display_smart_regions.m- displays salient regions as ellipses overlaid on the image
 % open_regions- open the saved results from the saliency detectors
 % save_regions- function to save the results from a saliency detector
+% bw_compute_region_props.m- computing region properties from a binary mask
 % compute_region_props.m- computing region properties from salient binary masks
 %**************************************************************************
 % misc
