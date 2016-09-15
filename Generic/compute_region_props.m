@@ -1,7 +1,7 @@
 % compute_region_props.m- computing region properties from salient binary masks
 %**************************************************************************
-% [regions_props , conn_comp] = compute_region_props(saliency_masks, ...
-%                                                    conn, list_props)
+% [regions_props, conn_comp] = compute_region_props(saliency_masks, conn,...
+%                                                   list_props)
 %
 % author: Elena Ranguelova, NLeSc
 % date created: 27 Oct 2015
@@ -13,16 +13,18 @@
 % modification details: new parameter conenctivity is aded
 %**************************************************************************
 % INPUTS:
-% saliency_masks-  the binary masks of the extracted salient regions
-% conn- neighbourhood connectivity to compute to obtain the regions from
-%       the binary masks
-% list_props- the list of desired region properties (see help
-%                  regionprops for all values)
+% saliency_masks  the binary masks of the extracted salient regions
+% [conn]          neighbourhood connectivity to compute to obtain the 
+%                 regions (CC) from the binary masks. Optional, default 4.
+% [list_props]    the list of desired region properties. Optional, 
+%                 see below for default. 
 %**************************************************************************
 % OUTPUTS:
-% region_props- structure with all region properties. The fileds of
-%                   the structure are as required in list_properties
-% conn_comp - the connected components derived from the saliency_masks
+% region_props    structure with all region properties. The fileds of
+%                 the structure are as required in list_properties
+% conn_comp       the connected components from the saliency_masks
+%**************************************************************************
+% NOTE: see also regionprops for all possible properties 
 %**************************************************************************
 % EXAMPLES USAGE:
 % a = rgb2gray(imread('circlesBrightDark.png'));
@@ -44,9 +46,11 @@ if nargin < 3
     list_props = {'Area', 'Centroid','ConvexArea', ...
         'Eccentricity', 'EquivDiameter', 'MinorAxisLength',...
         'MajorAxisLength', 'Orientation', 'Solidity'};
-elseif nargin < 2
+end
+if nargin < 2
     conn = 4;
-elseif nargin < 1
+end
+if nargin < 1
     error('compute_region_props.m requires at least 1 input argument!');
     region_properties = [];
     connn_comp = [];
