@@ -10,6 +10,7 @@
 % gray_level_detector.m- salient regions in a cross-section of gray-level image
 % binary_mask2features- obtain the equivalent elipses from a binary mask
 % max_conncomp_thresholding.m- connected component-based thresholding
+% data_driven_binarizer.m- data-driven binarization
 % visualize_regions_overlay.m- shows exact salient regions overlaid on image 
 % display_smart_regions.m- displays salient regions as ellipses overlaid on the image
 % open_regions- open the saved results from the saliency detectors
