@@ -1,8 +1,8 @@
 % max_conncomp_thresholding.m- connected component(CC)-based thresholding
 %**************************************************************************
 % [binary_image, otsu, num_combined_cc, thresh] = max_conncomp_thresholding(gray_image,
-%                               num_levels, offset, otsu_only,
-%                               morpholigy_parameters, weights,
+%                               step_size, offset, otsu_only,
+%                               morphology_parameters, weights,
 %                               execution_flags)
 %
 % author: Elena Ranguelova, NLeSc
@@ -41,7 +41,7 @@
 %                   weight_large- the weight for the number large CC
 %                   weight_very_large- for the number of very large CC
 %                   default value - [0.33 0.33 0.33], i.e equal
-% [execution_flags] vector of 2 elements, controlling the execution
+% [execution_flags] vector of 3 elements, controlling the execution
 %                   verbose- verbose mode
 %                   visualize- vizualize
 %                   python_test- generating results for the python test
