@@ -9,6 +9,7 @@
 %**************************************************************************
 % get_test_filenames- obtain test filenames from test_case and detector
 % get_filenames_path- obtain filenames from path and detector
+% get_bin_filenames- obtain original and binarization filenames from path
 %**************************************************************************
 % Scripts
 %**************************************************************************
