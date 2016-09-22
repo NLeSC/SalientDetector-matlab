@@ -81,7 +81,7 @@ execution_flags = [execution_flags python_test];
 
 %% preprocessing
 if ndims(input_image) > 2
-    image_data = rgb2gray(image_data_or);
+    image_data = rgb2gray(input_image);
 else
     image_data = input_image;
 end
