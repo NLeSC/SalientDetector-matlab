@@ -6,19 +6,20 @@
 % IMPORTANT NOTE
 % Please, change the starting and project paths to point at your repo directory!
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% last modification date: 
+% last modification date:
 % modification details:
 %**************************************************************************
-%% paramaters
+%% execution paramaters
 verbose = false;
 visualize = true;
+saving = true;
 if visualize
     set(0,'Units','pixels')
     scnsize = get(0,'ScreenSize');
 end
 
 
-%% parameters
+%% processing  parameters
 SE_size_factor = 0.02;
 Area_factor_very_large = 0.01;
 Area_factor_large = 0.001;
@@ -37,37 +38,33 @@ if ispc
 else
     starting_path = fullfile(filesep,'home','elena');
 end
-project_path = fullfile(starting_path, 'eStep','SalientDetector-matlab');
-data_path = fullfile(project_path, 'TestData');
-results_path = fullfile(project_path, 'TestResults');
+project_path = fullfile(starting_path, 'eStep','LargeScaleImaging');
+data_path = fullfile(project_path, 'Data','AffineRegions');
+results_path = fullfile(project_path, 'Results','AffineRegions');
 
 
-test_images = {'gray'};
-detector = 'DMSR';
-
-mask_filename =[];
+test_images = {'bikes'};
 
 disp('**************************** Testing data-driven binaization *****************');
 %% run for all test cases
 for test_image = test_images
     data_path_full = fullfile(data_path, char(test_image));
     results_path_full = fullfile(results_path, char(test_image));
-    [image_filenames, features_filenames, regions_filenames] = ...
-        get_filenames_path(detector, data_path_full, results_path_full);
+    [image_filenames, bin_filenames] = ...
+        get_bin_filenames(data_path_full, results_path_full);   
     disp('Test case: ');disp(test_image);
     %% find out the number of test files
     len = length(image_filenames);
     
     %% loop over all test images
-    %for i = 1:len
-    for i = 1
+    for i = 1:len
+        %for i = 1
         disp('Test image #: ');disp(i);
         %disp(image_filenames{i});
         %% load the image & convert to gray-scale if  color
-        image_data = imread(char(image_filenames{i}));        
+        image_data = imread(char(image_filenames{i}));
         
         %% run the binarization
-        
         j = 0;
         
         morphology_parameters = [SE_size_factor Area_factor_very_large ...
@@ -76,22 +73,25 @@ for test_image = test_images
         execution_flags = [verbose visualize];
         
         [binary_image, thresh] = data_driven_binarizer(image_data, ...
-            step_size, offset, otsu_only, ...
-            morphology_parameters, weights, ...
-            execution_flags);
+            step_size, offset, otsu_only, morphology_parameters, ...
+            weights,  execution_flags);
+        
+        %% visualization
+        if visualize
+            figure('Position',scnsize);
+            
+            subplot(121); imshow(image_data); title('Gray-scale image'); axis on, grid on;
+            subplot(122); imshow(double(binary_image)); axis on;grid on;
+            title(['Binarized image at level ' num2str(thresh)]);            
+        end
+        
+        %% saving
+        if saving 
+            imwrite(binary_image, char(bin_filenames{i}));
+        end
+        
         
     end
-    %% visualization
-    if visualize
-        figure('Position',scnsize);
-        
-        subplot(121); imshow(image_data); title('Gray-scale image'); axis on, grid on;                        
-        subplot(122); imshow(double(binary_image)); axis on;grid on;
-        title(['Binarized image at level ' num2str(thresh)]);
-        
-    end    
-   
-    
     disp('****************************************************************');
 end
 disp('--------------- The End ---------------------------------');
