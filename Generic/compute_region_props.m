@@ -5,6 +5,8 @@
 %
 % author: Elena Ranguelova, NLeSc
 % date created: 27 Oct 2015
+% last modification date: 20 Oct 2016
+% modification details: now works also for simple binary masks
 % last modification date: 12 Sep 2016
 % modification details: using bw_compute_region_props
 % last modification date: 03 Feb 2016
@@ -61,7 +63,12 @@ end
 % input parameters -> variables
 %--------------------------------------------------------------------------
 % how many types of regions?
-sal_types = size(saliency_masks,3);
+if ndims(saliency_masks) == 3
+    sal_types = size(saliency_masks,3);
+    simple_binary = false;
+else
+    simple_binary = true;
+end
 
 %**************************************************************************
 % initialisations
@@ -73,24 +80,29 @@ conn_comp = [];
 % computations
 %--------------------------------------------------------------------------
 j = 0;
-if sal_types > 0
-    j = j+ 1;
-    bw = saliency_masks(:,:,j);
-    [regions_props, CC] = bw_compute_region_props(bw, conn, list_props);
-    conn_comp{j} = CC;
-end
-for s = 1: sal_types - 1
-    j = j+ 1;
-    bw = saliency_masks(:,:,j);
-    [new_props, CC] = bw_compute_region_props(bw, conn, list_props);
-    conn_comp{j} = CC;
-    regions_props = append_props(regions_props, new_props,...
-        list_props);
+if simple_binary
+    bw = saliency_masks;
+    [regions_props, conn_comp] = bw_compute_region_props(bw, conn, list_props);
+else    
+    if sal_types > 0
+        j = j+ 1;
+        bw = saliency_masks(:,:,j);
+        [regions_props, CC] = bw_compute_region_props(bw, conn, list_props);
+        conn_comp{j} = CC;
+    end
+    for s = 1: sal_types - 1
+        j = j+ 1;
+        bw = saliency_masks(:,:,j);
+        [new_props, CC] = bw_compute_region_props(bw, conn, list_props);
+        conn_comp{j} = CC;
+        regions_props = append_props(regions_props, new_props,...
+            list_props);
+    end
 end
 %**************************************************************************
 % nested functions
 %--------------------------------------------------------------------------
-    function appended_props = append_props(old_props, new_props, list_props)
+  function appended_props = append_props(old_props, new_props, list_props)
         for l = 1: length(list_props)
             appended_props = old_props;
             new_props_per_type = new_props.list_props{l};
@@ -98,5 +110,6 @@ end
                 new_props_per_type];
         end
     end
+
 
 end
