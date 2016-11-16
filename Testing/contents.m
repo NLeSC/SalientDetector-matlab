@@ -18,7 +18,8 @@
 
 % test_dmsr.m- script to test the DMSR detector 
 % test_max_conncomp_thresholding.m- testing the data-driven binarization 
-% test_DDBinarizer- testing the data-driven binarization (data_driven_binarizer)
+% apply_DDBinarizer_Oxford- applying the the data-driven binarization 
+%                          (data_driven_binarizer) to the Oxford dataset
 
                                            
 

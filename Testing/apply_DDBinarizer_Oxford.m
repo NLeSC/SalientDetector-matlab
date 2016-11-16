@@ -1,4 +1,5 @@
-% test_DDBinarizer- testing the data-driven binarization (data_driven_binarizer)
+% apply_DDBinarizer_Oxford- applying the the data-driven binarization 
+%                          (data_driven_binarizer) to the Oxford dataset
 %**************************************************************************
 % author: Elena Ranguelova, NLeSc
 % date created: 20-09-2016
@@ -6,8 +7,8 @@
 % IMPORTANT NOTE
 % Please, change the starting and project paths to point at your repo directory!
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% last modification date:
-% modification details:
+% last modification date: 16-11-2016
+% modification details: renaming of the script
 %**************************************************************************
 %% execution paramaters
 verbose = false;
