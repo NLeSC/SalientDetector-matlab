@@ -4,7 +4,7 @@
 %           get_bin_filenames(data_path, results_path)
 %
 % author: Elena Ranguelova, NLeSc
-% date created: 21 Sept 2015
+% date created: 21 Sept 2016
 % last modification date: 
 % modification details: 
 %**************************************************************************
