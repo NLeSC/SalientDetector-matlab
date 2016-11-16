@@ -20,6 +20,8 @@
 % test_max_conncomp_thresholding.m- testing the data-driven binarization 
 % apply_DDBinarizer_Oxford- applying the the data-driven binarization 
 %                          (data_driven_binarizer) to the Oxford dataset
+% apply_DDBinarizer_Oxfrei- applying the the data-driven binarization 
+%                          (data_driven_binarizer) to the OxFrei dataset
 
                                            
 
