@@ -2,6 +2,12 @@
 
 MATLAB Software for Imaging research @ NLeSc
 
-Contains implementations of the Morphology-based Salient Region Detectors.
+## MATLAB software implementation of the Morphology-based Salient Region Detectors.
+For example usage refer to the MATLAB scripts in directory 'Testing'.
 
-For example usage refer to the MATLAB scripts in directory Tetsting.
+### Reference
+E. Ranguelova, "A Salient Region Detector for Structured Images", Proceedings of IEEE/AICCSA conference, 2016, pp. 1-8.
+[IEEE Xplore link](http://ieeexplore.ieee.org/document/7945643/)
+
+### Aso of interest
+[SalientDescriptor-matlab](https://github.com/NLeSC/SalientDescriptor-matlab)
