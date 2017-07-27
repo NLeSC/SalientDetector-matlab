@@ -7,6 +7,7 @@ For example usage refer to the MATLAB scripts in directory 'Testing'.
 
 ### Reference
 E. Ranguelova, "A Salient Region Detector for Structured Images", Proceedings of IEEE/AICCSA conference, 2016, pp. 1-8.
+
 [IEEE Xplore link](http://ieeexplore.ieee.org/document/7945643/)
 
 ### Aso of interest
