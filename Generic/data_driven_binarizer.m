@@ -80,7 +80,7 @@ python_test = 0; % for compatibility
 execution_flags = [execution_flags python_test];
 
 %% preprocessing
-if ndims(input_image) > 2
+if ~ismatrix(input_image)
     image_data = rgb2gray(input_image);
 else
     image_data = input_image;
