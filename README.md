@@ -1,3 +1,6 @@
+
+[![DOI](https://zenodo.org/badge/55982881.svg)](https://zenodo.org/badge/latestdoi/55982881)
+
 # MATLAB software for image processing
 
 MATLAB Software for Imaging research @ NLeSc
@@ -12,3 +15,5 @@ E. Ranguelova, "A Salient Region Detector for Structured Images", Proceedings of
 
 ### Aso of interest
 [SalientDescriptor-matlab](https://github.com/NLeSC/SalientDescriptor-matlab)
+
+
